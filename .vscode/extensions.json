@@ -1,0 +1,18 @@
+{
+  // See http://go.microsoft.com/fwlink/?LinkId=827846
+  // for the documentation about the extensions.json format
+  "recommendations": [
+    "streetsidesoftware.code-spell-checker",
+    "mikestead.dotenv",
+    "xdebug.php-debug",
+    "neilbrayfield.php-docblocker",
+    "bmewburn.vscode-intelephense-client",
+    "mosapride.zenkaku",
+    "austenc.laravel-blade-spacer",
+    "amiralizadeh9480.laravel-extra-intellisense",
+    "ctf0.laravel-goto-controller",
+    "codingyu.laravel-goto-view",
+    "emeraldwalk.runonsave",
+    "oderwat.indent-rainbow"
+  ]
+}

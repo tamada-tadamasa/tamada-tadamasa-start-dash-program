@@ -1,0 +1,40 @@
+services:
+
+  laravel:
+    build:
+      context: ./docker/
+      dockerfile: laravel.Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - ./:/usr/share/nginx/html:cached
+      - ./docker/php.ini:/usr/local/etc/php/php.ini
+      - ~/.ssh:/root/.ssh
+    depends_on:
+      - mysql
+
+  http-nginx:
+    image: nginx:1.24-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/http-nginx.conf:/etc/nginx/conf.d/default.conf:cached
+      - ./:/usr/share/nginx/html:cached
+      - ./docker/cert:/etc/nginx/cert
+    depends_on:
+      - laravel
+
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      TZ: ${DB_TIME_ZONE}
+    volumes:
+      - ./storage/tmp/db:/var/lib/mysql:cached
+      - ./docker:/etc/mysql/conf.d
+      - ./docker/initdb:/docker-entrypoint-initdb.d
+      - ./docker/mysql:/var/log/mysql
